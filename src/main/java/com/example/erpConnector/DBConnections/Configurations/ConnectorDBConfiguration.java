@@ -1,6 +1,6 @@
 package com.example.erpConnector.DBConnections.Configurations;
 
-import com.example.erpConnector.DBConnections.Entities.Database;
+import com.example.erpConnector.DBConnections.Entities.DatabaseConnection;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -47,7 +47,7 @@ public class ConnectorDBConfiguration {
     public LocalContainerEntityManagerFactoryBean connectorEntityManagerFactory(EntityManagerFactoryBuilder entityManagerFactoryBuilder)
     {
         return entityManagerFactoryBuilder.dataSource(connectorDataSource())
-                .packages(Database.class)
+                .packages(DatabaseConnection.class)
                 .build();
     }
 
