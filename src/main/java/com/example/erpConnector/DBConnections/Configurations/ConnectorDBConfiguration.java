@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,12 @@ public class ConnectorDBConfiguration {
     @ConfigurationProperties("spring.datasource-connector")
     public DataSourceProperties connectorDataSourceProperties()
     {
-        return new DataSourceProperties();
+        DataSourceProperties dataSourceProperties = new DataSourceProperties();
+        dataSourceProperties.setUrl("jdbc:mysql://localhost:3306/connector_db");
+        dataSourceProperties.setUsername("root");
+        dataSourceProperties.setPassword("");
+        dataSourceProperties.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        return dataSourceProperties;
     }
 
     @Primary
@@ -41,6 +47,8 @@ public class ConnectorDBConfiguration {
                 .type(HikariDataSource.class)
                 .build();
     }
+
+
 
     @Primary
     @Bean(name = "connectorEntityManagerFactory")
