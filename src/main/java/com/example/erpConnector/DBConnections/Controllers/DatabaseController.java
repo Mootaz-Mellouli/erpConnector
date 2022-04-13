@@ -1,10 +1,12 @@
 package com.example.erpConnector.DBConnections.Controllers;
 
 import com.example.erpConnector.DBConnections.Entities.DatabaseConnection;
+import com.example.erpConnector.DBConnections.Entities.DatabaseView;
 import com.example.erpConnector.DBConnections.Services.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -24,5 +26,11 @@ public class DatabaseController {
     public DatabaseConnection addDatabase(@RequestBody DatabaseConnection databaseConnection)
     {
         return databaseService.addDatabase(databaseConnection);
+    }
+
+    @GetMapping({"/info"})
+    public Collection<DatabaseView> getDatabaseInfo()
+    {
+        return databaseService.getDatabaseView();
     }
 }
