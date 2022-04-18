@@ -5,8 +5,6 @@ import com.example.erpConnector.DBConnections.Entities.DatabaseView;
 import com.example.erpConnector.DBConnections.Services.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -29,8 +27,20 @@ public class DatabaseController {
     }
 
     @GetMapping({"/info"})
-    public Collection<DatabaseView> getDatabaseInfo()
+    public List<DatabaseView> getDatabaseInfo()
     {
         return databaseService.getDatabaseView();
+    }
+
+    @PostMapping({"/save"})
+    public List<DatabaseView> saveDatabaseInfo()
+    {
+        return databaseService.saveDatabaseInfo();
+    }
+
+    @PostMapping({"/addinfo"})
+    public DatabaseView addDatabaseinfo(@RequestBody DatabaseView databaseView)
+    {
+        return databaseService.addinfo(databaseView);
     }
 }
