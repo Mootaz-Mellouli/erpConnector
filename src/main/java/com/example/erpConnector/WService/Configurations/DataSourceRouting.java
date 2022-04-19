@@ -1,6 +1,8 @@
 package com.example.erpConnector.WService.Configurations;
 
 
+import com.example.erpConnector.DBConnections.Configurations.ConnectorDBConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Component;
@@ -16,17 +18,21 @@ public class DataSourceRouting extends AbstractRoutingDataSource {
     private DataSourceTwoConfig dataSourceTwoConfig ;
     private DataSourceContexHolder dataSourceContexHolder ;
 
-    public  DataSourceRouting(DataSourceContexHolder dataSourceContexHolder , DataSourceOneConfig dataSourceOneConfig , DataSourceTwoConfig dataSourceTwoConfig)
+
+    private ConnectorDBConfiguration connectorDBConfiguration ;
+
+    public  DataSourceRouting(DataSourceContexHolder dataSourceContexHolder , DataSourceOneConfig dataSourceOneConfig , DataSourceTwoConfig dataSourceTwoConfig,ConnectorDBConfiguration connectorDBConfiguration)
     {
         this.dataSourceContexHolder=dataSourceContexHolder ;
         this.dataSourceOneConfig = dataSourceOneConfig ;
         this.dataSourceTwoConfig = dataSourceTwoConfig ;
+        this.connectorDBConfiguration=connectorDBConfiguration;
 
         Map<Object,Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put(DataSourceEnum.DataSourceONE,dataSourceOneDataSource());
         dataSourceMap.put(DataSourceEnum.DataSourceTWO,dataSourceTwoDataSource());
         this.setTargetDataSources(dataSourceMap);
-        this.setDefaultTargetDataSource(dataSourceOneDataSource());
+        this.setDefaultTargetDataSource(connectorDBConfiguration.dataSourceByDefault());
     }
 
     public DataSource dataSourceTwoDataSource() {

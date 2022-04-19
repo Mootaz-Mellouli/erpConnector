@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -37,6 +38,15 @@ public class ConnectorDBConfiguration {
         dataSourceProperties.setPassword("");
         dataSourceProperties.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return dataSourceProperties;
+    }
+
+    public DataSource dataSourceByDefault() {
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setUrl(connectorDataSourceProperties().getUrl());
+        driverManagerDataSource.setPassword(connectorDataSourceProperties().getPassword());
+        driverManagerDataSource.setUsername(connectorDataSourceProperties().getUsername());
+        return  driverManagerDataSource ;
+
     }
 
     @Primary
