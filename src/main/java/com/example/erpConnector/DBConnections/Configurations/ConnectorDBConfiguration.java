@@ -27,6 +27,7 @@ import javax.sql.DataSource;
         basePackages = {"com.example.erpConnector.DBConnections.Repository"})
 public class ConnectorDBConfiguration {
 
+
     @Primary
     @Bean(name = "connectorDataSourceProperties")
     @ConfigurationProperties("spring.datasource-connector")
@@ -38,6 +39,7 @@ public class ConnectorDBConfiguration {
         dataSourceProperties.setPassword("");
         dataSourceProperties.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return dataSourceProperties;
+
     }
 
     public DataSource dataSourceByDefault() {
