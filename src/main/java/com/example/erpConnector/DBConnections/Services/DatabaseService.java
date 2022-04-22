@@ -5,8 +5,9 @@ import com.example.erpConnector.DBConnections.Entities.DatabaseConnection;
 import com.example.erpConnector.DBConnections.Entities.DatabaseView;
 import com.example.erpConnector.DBConnections.Repository.DatabaseRepository;
 import com.example.erpConnector.DBConnections.Repository.DatabaseViewRepository;
+import com.example.erpConnector.WService.Configurations.DataSourceConfig;
 import com.example.erpConnector.WService.Configurations.DataSourceOneConfig;
-import com.example.erpConnector.WService.Configurations.DataSourceRouting;
+
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,15 +27,15 @@ public class DatabaseService {
     ConnectorDBConfiguration connectorDBConfiguration ;*/
    /* @Autowired
     DataSourceOneConfig dataSourceOneConfig ;*/
+@Autowired
+DataSourceConfig dataSourceConfig ;
+   // DataSourceRouting dataSourceRouting ;
 
-
-    DataSourceRouting dataSourceRouting ;
-
-    @Autowired
+    /*@Autowired
     public DatabaseService(@Qualifier("DataSourceRouting") DataSourceRouting drs)
     {
         this.dataSourceRouting=drs;
-    }
+    }*/
 
     public List<DatabaseConnection> getAllDatabases()
     {
@@ -45,8 +46,8 @@ public class DatabaseService {
     {
         //connectorDBConfiguration.connectorDataSourceProperties().setUrl(databaseConnection.getDb_hostname());
         /*dataSourceOneConfig.setUrl(databaseConnection.getDb_hostname());*/
-
-      this.dataSourceRouting.setRoutInput(databaseConnection.getDb_username().toString());
+        dataSourceConfig.setRoutInput(databaseConnection.getDb_username());
+      //this.dataSourceRouting.setRoutInput(databaseConnection.getDb_username().toString());
         return databaseRepository.save(databaseConnection);
     }
 
