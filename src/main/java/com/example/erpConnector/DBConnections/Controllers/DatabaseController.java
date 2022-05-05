@@ -1,7 +1,8 @@
 package com.example.erpConnector.DBConnections.Controllers;
 
 import com.example.erpConnector.DBConnections.Entities.DatabaseConnection;
-import com.example.erpConnector.DBConnections.Entities.DatabaseView;
+import com.example.erpConnector.DBConnections.Entities.DatabaseRowInfo;
+import com.example.erpConnector.DBConnections.Entities.DatabaseTableInfo;
 import com.example.erpConnector.DBConnections.Services.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ public class DatabaseController {
     @Autowired
     DatabaseService databaseService ;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping({"/"})
     public List<DatabaseConnection> getAllDatabases()
     {
@@ -26,21 +28,29 @@ public class DatabaseController {
         return databaseService.addDatabase(databaseConnection);
     }
 
-    @GetMapping({"/info"})
-    public List<DatabaseView> getDatabaseInfo()
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/info/{x}")
+    public List<DatabaseTableInfo> getDatabaseTablesInfo(@PathVariable("x") String x)
     {
-        return databaseService.getDatabaseView();
+        return databaseService.getDatabaseTablesInfo(x);
     }
 
-    @PostMapping({"/save"})
-    public List<DatabaseView> saveDatabaseInfo()
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/info/{tableName}/{dbName}")
+    public List<DatabaseRowInfo> getDatabaseRowsInfo(@PathVariable("tableName")String tableName,@PathVariable("dbName") String dbName)
     {
-        return databaseService.saveDatabaseInfo();
+        return databaseService.getDatabaseRowsInfo(tableName,dbName);
     }
+
+    /*@PostMapping({"/save"})
+    public List<DatabaseView> saveDatabaseInfo(String x)
+    {
+        return databaseService.saveDatabaseInfo(x);
+    }*/
 
     @PostMapping({"/addinfo"})
-    public DatabaseView addDatabaseinfo(@RequestBody DatabaseView databaseView)
+    public DatabaseTableInfo addDatabaseinfo(@RequestBody DatabaseTableInfo databaseTableInfo)
     {
-        return databaseService.addinfo(databaseView);
+        return databaseService.addinfo(databaseTableInfo);
     }
 }

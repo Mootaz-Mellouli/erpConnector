@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -55,9 +56,11 @@ public class DataSourceConfig {
 
 
     @Bean(name = "dataSourceDataSourceProperties")
+    @Order(2)
     @ConfigurationProperties("datasourceone.datasource")
     public DataSource dataSourceDataSourceProperties()
     {
+        System.out.println("i'm first");
         DataSourceProperties dataSourceProperties = new DataSourceProperties();
         dataSourceProperties.setUrl("jdbc:mysql://localhost:3306/customer");
         dataSourceProperties.setUsername("");
@@ -78,8 +81,11 @@ public class DataSourceConfig {
 
 
     @Bean(name = "dataSource")
+    @Order(1)
     public DataSource dataSource()
     {
+        System.out.println("i'm second");
+
         DataSourceAbstractRouting dataSourceAbstractRouting = new DataSourceAbstractRouting();
         Map<Object,Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put(DataSourceEnum.DataSourceONE,dataSourceDataSourceProperties());

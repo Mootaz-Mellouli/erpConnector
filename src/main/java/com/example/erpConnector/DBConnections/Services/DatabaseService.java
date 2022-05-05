@@ -1,16 +1,14 @@
 package com.example.erpConnector.DBConnections.Services;
 
-import com.example.erpConnector.DBConnections.Configurations.ConnectorDBConfiguration;
 import com.example.erpConnector.DBConnections.Entities.DatabaseConnection;
-import com.example.erpConnector.DBConnections.Entities.DatabaseView;
+import com.example.erpConnector.DBConnections.Entities.DatabaseRowInfo;
+import com.example.erpConnector.DBConnections.Entities.DatabaseTableInfo;
 import com.example.erpConnector.DBConnections.Repository.DatabaseRepository;
-import com.example.erpConnector.DBConnections.Repository.DatabaseViewRepository;
+import com.example.erpConnector.DBConnections.Repository.DatabaseRowInfoRepository;
+import com.example.erpConnector.DBConnections.Repository.DatabaseTableInfoRepository;
 import com.example.erpConnector.WService.Configurations.DataSourceConfig;
-import com.example.erpConnector.WService.Configurations.DataSourceOneConfig;
 
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -21,7 +19,10 @@ public class DatabaseService {
     DatabaseRepository databaseRepository ;
 
     @Autowired
-    DatabaseViewRepository databaseViewRepository ;
+    DatabaseTableInfoRepository databaseTableInfoRepository;
+
+    @Autowired
+    DatabaseRowInfoRepository databaseRowInfoRepository ;
 
     /*@Autowired
     ConnectorDBConfiguration connectorDBConfiguration ;*/
@@ -51,12 +52,17 @@ DataSourceConfig dataSourceConfig ;
         return databaseRepository.save(databaseConnection);
     }
 
-    public List<DatabaseView> getDatabaseView()
+    public List<DatabaseTableInfo> getDatabaseTablesInfo(String x)
     {
-        return databaseViewRepository.getDataBaseInfo();
+        return databaseTableInfoRepository.getDataBaseTableInfo(x);
     }
 
-    public List<DatabaseView> saveDatabaseInfo()
+    public List<DatabaseRowInfo> getDatabaseRowsInfo(String dbName,String tableName)
+    {
+        return databaseRowInfoRepository.getDataBaseRowInfo(tableName,dbName);
+    }
+
+    /*public List<DatabaseView> saveDatabaseInfo()
     {
 
         List<DatabaseView> databaseView = databaseViewRepository.getDataBaseInfo();
@@ -66,10 +72,10 @@ DataSourceConfig dataSourceConfig ;
        // return  databaseViewRepository.saveAll(databaseView);
         return databaseView ;
     }
-
-    public DatabaseView addinfo(DatabaseView databaseView)
+*/
+    public DatabaseTableInfo addinfo(DatabaseTableInfo databaseTableInfo)
     {
-        return databaseViewRepository.save(databaseView);
+        return databaseTableInfoRepository.save(databaseTableInfo);
     }
 
 }
