@@ -1,9 +1,13 @@
 package com.example.erpConnector.WService.Controller;
 
+import com.example.erpConnector.WService.Entity.QueryResult;
 import com.example.erpConnector.WService.Entity.WebService;
 import com.example.erpConnector.WService.Services.WSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping({"/ws"})
@@ -16,5 +20,23 @@ public class WebServiceController {
     public WebService createWS(@RequestBody WebService webService)
     {
         return webserviceService.addWebService(webService);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping({"/"})
+    public List<WebService> getAllWSCreated()
+    {
+        return webserviceService.getAllWebServices();
+    }
+
+    /*@GetMapping({"/{id}"})
+    public Optional<WebService> getservicebyID(@PathVariable("id") Integer id)
+    {
+     return webserviceService.callService(id);
+    }*/
+    @GetMapping({"/{id}"})
+    public QueryResult mainService(@PathVariable("id")Integer id)
+    {
+         return webserviceService.callService(id);
     }
 }

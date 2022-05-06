@@ -17,5 +17,6 @@ public class WebService {
     private String database_name ;
     private String table_name ;
     private String row_name ;
-    private String value ;
+    private String inputValue ;
+    private String inputRow ;
 }
