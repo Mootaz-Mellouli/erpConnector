@@ -39,6 +39,14 @@ public class WebServiceController {
     @GetMapping({"/{id}"})
     public List mainService(@PathVariable("id")Integer id)
     {
+
          return webserviceService.callService(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @DeleteMapping({"/delete/{id}"})
+    public void deleteService(@PathVariable("id") Integer id)
+    {
+        webserviceService.deleteService(id);
     }
 }

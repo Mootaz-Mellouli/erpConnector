@@ -2,10 +2,9 @@ package com.example.erpConnector.WService.Entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,7 +16,8 @@ public class WebService {
     private String service_name ;
     private String database_name ;
     private String table_name ;
-    private String row_name ;
+    @ElementCollection(fetch = FetchType.EAGER) //temporary solution.
+    private List<String> column_name = new ArrayList<>();
     private String inputValue ;
-    private String inputRow ;
+    private String inputColumn ;
 }

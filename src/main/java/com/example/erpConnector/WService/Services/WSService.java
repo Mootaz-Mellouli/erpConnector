@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,8 @@ public class WSService {
 
     public List<WebService> getAllWebServices()
     {
+       /* entityManager.getTransaction().begin();
+        TypedQuery<WebService> query = entityManager.createQuery("select  a from WebService a left join fetch a.webservice_column_name",WebService.class);*/
         return webServiceRepository.findAll();
     }
 
@@ -41,15 +44,16 @@ public class WSService {
       Optional<WebService> webService ;
       webService= webServiceRepository.findById(id);
       //return extractionServiceRepository.extractData(webService.get().getRow_name(),webService.get().getInputRow(),webService.get().getInputValue());
-       Query query=entityManager.createNativeQuery("select first_name from customer  where customer_id=:x");
-       String rowName=webService.get().getRow_name();
+       Query query=entityManager.createNativeQuery("select (:x) from customer  where customer_id=1");
+       List<String> columnNames=webService.get().getColumn_name();
        String inputvalue=webService.get().getInputValue();
+       String rowTest ="first_name";
       //  List empNumbers = Arrays.asList("first_name","last_name");
       // System.out.println(rowName);
-      query.setParameter("x",inputvalue);
+      query.setParameter("x",columnNames);
 
 
-        List author =  query.getResultList();
+        List author = query.getResultList();
         System.out.println(author);
         return author ;
         //return extractionServiceRepository.extractData();
@@ -59,12 +63,9 @@ public class WSService {
        // entityManager.createNativeQuery("");
 
     }
-
-    public void  createQuery()
+    public void deleteService(Integer id)
     {
-        Query query ;
-        query=entityManager.createQuery("");
-        query.getSingleResult();
+        webServiceRepository.deleteById(id);
     }
 
 }
