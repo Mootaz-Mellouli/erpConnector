@@ -2,7 +2,7 @@ package com.example.erpConnector.WService.Entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
+import javax.persistence.Entity;;
 import javax.persistence.Id;
 
 @Entity
@@ -10,5 +10,7 @@ import javax.persistence.Id;
 public class QueryResult {
 
     @Id
-    private String rowData ;
+    private String first_name ;
+
+
 }

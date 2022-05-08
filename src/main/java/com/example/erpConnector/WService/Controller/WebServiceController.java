@@ -34,8 +34,10 @@ public class WebServiceController {
     {
      return webserviceService.callService(id);
     }*/
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping({"/{id}"})
-    public QueryResult mainService(@PathVariable("id")Integer id)
+    public List mainService(@PathVariable("id")Integer id)
     {
          return webserviceService.callService(id);
     }

@@ -14,6 +14,7 @@ public class WebService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
+    private String service_name ;
     private String database_name ;
     private String table_name ;
     private String row_name ;
