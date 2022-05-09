@@ -10,7 +10,7 @@ public class DatabaseConnection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer db_ID ;
+    private Integer id ;
     private String db_hostname ;
     private String db_username ;
     private String db_password ;

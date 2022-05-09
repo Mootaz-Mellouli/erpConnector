@@ -45,12 +45,13 @@ public class WSService {
       webService= webServiceRepository.findById(id);
       //return extractionServiceRepository.extractData(webService.get().getRow_name(),webService.get().getInputRow(),webService.get().getInputValue());
        Query query=entityManager.createNativeQuery("select (:x) from customer  where customer_id=1");
-       List<String> columnNames=webService.get().getColumn_name();
+       List columnNames=webService.get().getColumn_name();
+       String oneColumn=webService.get().getColumn_name().get(1);
        String inputvalue=webService.get().getInputValue();
-       String rowTest ="first_name";
+       String columnTest ="first_name";
       //  List empNumbers = Arrays.asList("first_name","last_name");
       // System.out.println(rowName);
-      query.setParameter("x",columnNames);
+      query.setParameter("x",oneColumn);
 
 
         List author = query.getResultList();

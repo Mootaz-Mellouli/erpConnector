@@ -10,7 +10,10 @@ import com.example.erpConnector.WService.Configurations.DataSourceConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.xml.crypto.Data;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatabaseService {
@@ -76,6 +79,22 @@ DataSourceConfig dataSourceConfig ;
     public DatabaseTableInfo addinfo(DatabaseTableInfo databaseTableInfo)
     {
         return databaseTableInfoRepository.save(databaseTableInfo);
+    }
+
+    public void deleteDBConnection(Integer id)
+    {
+        databaseRepository.deleteById(id);
+    }
+
+    public DatabaseConnection updateDBConnection (DatabaseConnection databaseConnection , Integer id)
+    {
+        DatabaseConnection dbConn = databaseRepository.findDatabaseConnectionById(id);
+        dbConn.setDb_name(databaseConnection.getDb_name());
+        dbConn.setDb_type(databaseConnection.getDb_type());
+        dbConn.setDb_password(databaseConnection.getDb_password());
+        dbConn.setDb_hostname(databaseConnection.getDb_hostname());
+        dbConn.setDb_username(databaseConnection.getDb_username());
+        return databaseRepository.save(dbConn);
     }
 
 }

@@ -22,6 +22,7 @@ public class DatabaseController {
         return databaseService.getAllDatabases();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping({"/add"})
     public DatabaseConnection addDatabase(@RequestBody DatabaseConnection databaseConnection)
     {
@@ -52,5 +53,19 @@ public class DatabaseController {
     public DatabaseTableInfo addDatabaseinfo(@RequestBody DatabaseTableInfo databaseTableInfo)
     {
         return databaseService.addinfo(databaseTableInfo);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @DeleteMapping({"/delete/{id}"})
+    public void deleteDBConnection(@PathVariable("id") Integer id)
+    {
+        databaseService.deleteDBConnection(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping({"/{id}"})
+    public DatabaseConnection updateDBConnection(@RequestBody DatabaseConnection databaseConnection ,@PathVariable("id") Integer id)
+    {
+        return databaseService.updateDBConnection(databaseConnection,id) ;
     }
 }
