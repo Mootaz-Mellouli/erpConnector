@@ -44,29 +44,19 @@ public class WSService {
         Optional<WebService> webService ;
         /* * * * * * * je stock le service dans la variable webService  */
         webService= webServiceRepository.findById(id);
-        Query query=entityManager.createNativeQuery("select :x from customer  where customer_id=1");
+        //Query query=entityManager.createNativeQuery("select :x from customer  where customer_id=1");
         /* * * * * * * je stock la list des colonnes dans la variable columnsNames  */
         List columnNames=webService.get().getColumn_name();
-        /* * * * * * * je stock une seule colonne dans la variable oneColumn  */
-        /* * * la variable oneColumn contient le nom du colonne qu'on souhaite extraire qui est "first_name" */
-        String oneColumn=webService.get().getColumn_name().get(1);
+        String tableName=webService.get().getTable_name();
+        String inputColumn=webService.get().getInputColumn();
+        String inputValue=webService.get().getInputValue();
+        String operateur=webService.get().getOperator();
+        Query query=entityManager.createNativeQuery("select "+ "".join(",",columnNames) +" from "+ tableName+ " where "+ inputColumn + " "+operateur+" " + inputValue+"");
         /* * * ici je passe la variable comme un parametre dans la requete */
-        query.setParameter("x",oneColumn);
+        //query.setParameter("x",oneColumn);
         /* * execution du requete */
         List queryReslt = query.getResultList();
         return queryReslt ;
-        //System.out.println(author);
-        //String inputvalue=webService.get().getInputValue();
-        // String columnTest ="first_name";
-        //return extractionServiceRepository.extractData(webService.get().getRow_name(),webService.get().getInputRow(),webService.get().getInputValue());
-        //  List empNumbers = Arrays.asList("first_name","last_name");
-        // System.out.println(rowName);
-        //return extractionServiceRepository.extractData();
-        /*Query query = EntityManager.crea*/
-        //Query quy="select first_name from customer where customer_id = 1";
-        // entityManager.createNativeQuery(  "select id from users where username = ?");
-        // entityManager.createNativeQuery("");
-
     }
     public void deleteService(Integer id)
     {

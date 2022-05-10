@@ -20,4 +20,5 @@ public class WebService {
     private List<String> column_name = new ArrayList<>();
     private String inputValue ;
     private String inputColumn ;
+    private String operator ;
 }
