@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "connectorEntityManagerFactory", transactionManagerRef = "connectorTransactionManager",
-        basePackages = {"com.example.erpConnector.DBConnections.Repository"})
+        basePackages = {"com.example.erpConnector.DBConnections.Repository","com.example.erpConnector.WService.Repository"})
 public class ConnectorDBConfiguration {
 
 
@@ -39,14 +39,14 @@ public class ConnectorDBConfiguration {
 
     }
 
-    public DataSource dataSourceByDefault() {
+   /* public DataSource dataSourceByDefault() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setUrl(connectorDataSourceProperties().getUrl());
         driverManagerDataSource.setPassword(connectorDataSourceProperties().getPassword());
         driverManagerDataSource.setUsername(connectorDataSourceProperties().getUsername());
         return  driverManagerDataSource ;
 
-    }
+    }*/
 
     @Primary
     @Bean(name = "connectorDataSource")
@@ -65,7 +65,7 @@ public class ConnectorDBConfiguration {
     public LocalContainerEntityManagerFactoryBean connectorEntityManagerFactory(EntityManagerFactoryBuilder entityManagerFactoryBuilder)
     {
         return entityManagerFactoryBuilder.dataSource(connectorDataSource())
-                .packages("com.example.erpConnector.DBConnections.Entities")
+                .packages("com.example.erpConnector")
                 .build();
     }
 

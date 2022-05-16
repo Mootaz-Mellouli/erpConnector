@@ -5,12 +5,15 @@ import com.example.erpConnector.WService.Entity.WebService;
 import com.example.erpConnector.WService.Repository.ExtractionServiceRepository;
 import com.example.erpConnector.WService.Repository.WebServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -62,5 +65,7 @@ public class WSService {
     {
         webServiceRepository.deleteById(id);
     }
+
+
 
 }

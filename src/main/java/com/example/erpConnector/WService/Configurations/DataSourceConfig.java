@@ -1,3 +1,4 @@
+/*
 package com.example.erpConnector.WService.Configurations;
 
 import com.example.erpConnector.DBConnections.Configurations.ConnectorDBConfiguration;
@@ -40,7 +41,8 @@ public class DataSourceConfig {
         this.connectorDBConfiguration = connectorDBConfiguration;
     }
 
-   /* @Bean
+   */
+/* @Bean
     public DataSource dataSourceTwoDataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/customer");
@@ -48,7 +50,8 @@ public class DataSourceConfig {
         driverManagerDataSource.setUsername("root");
         return  driverManagerDataSource ;
 
-    }*/
+    }*//*
+
     public void setRoutInput(String routInput)
     {
         this.routInput=routInput;
@@ -70,17 +73,20 @@ public class DataSourceConfig {
 
     }
 
-   /* @Bean(name = "dataSourceDataSource")
+   */
+/* @Bean(name = "dataSourceDataSource")
     public DataSource dataSourceDataSource()
     {
         return dataSourceDataSourceProperties()
                 .initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
                 .build();
-    }*/
+    }*//*
 
 
-    @Bean(name = "dataSource")
+
+   */
+/* @Bean(name = "dataSource")
     @Order(1)
     public DataSource dataSource()
     {
@@ -93,21 +99,27 @@ public class DataSourceConfig {
         dataSourceAbstractRouting.setTargetDataSources(dataSourceMap);
         dataSourceAbstractRouting.setDefaultTargetDataSource(connectorDBConfiguration.dataSourceByDefault());
         return dataSourceAbstractRouting ;
-    }
+    }*//*
 
 
-    @Bean(name = "EntityManagerFactory")
+
+    */
+/*@Bean(name = "EntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean EntityManagerFactory(EntityManagerFactoryBuilder entityManagerFactoryBuilder)
     {
         return entityManagerFactoryBuilder.dataSource(dataSource())
-                .packages("com.example.erpConnector.WService.Entity")
+                .packages("com.example.erpConnector")
                 .build();
-    }
+    }*//*
 
 
-    @Bean(name = "TransactionManager")
+
+   */
+/* @Bean(name = "TransactionManager")
     public JpaTransactionManager connectorTransactionManager(@Qualifier("EntityManagerFactory")  LocalContainerEntityManagerFactoryBean EntityManagerFactory)
     {
         return new JpaTransactionManager(EntityManagerFactory.getObject());
-    }
+    }*//*
+
 }
+*/
