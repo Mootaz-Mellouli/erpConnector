@@ -5,6 +5,7 @@ import com.example.erpConnector.WService.Services.WSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -27,17 +28,21 @@ public class WebServiceController {
         return webserviceService.getAllWebServices();
     }
 
-    /*@GetMapping({"/{id}"})
-    public Optional<WebService> getservicebyID(@PathVariable("id") Integer id)
+    String urlString ;
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping({"/callService/{id}"})
+    public List mainService(@PathVariable("id")Integer id,HttpServletRequest httpServletRequest)
     {
-     return webserviceService.callService(id);
-    }*/
+        this.urlString=httpServletRequest.getRequestURL().toString() ;
+        return webserviceService.callService(id);
+    }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping({"/{id}"})
-    public List mainService(@PathVariable("id")Integer id)
+    @GetMapping({"/geturl"})
+    public String getURLValue()
     {
-         return webserviceService.callService(id);
+        System.out.println("this is request url : "+urlString);
+        return this.urlString ;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

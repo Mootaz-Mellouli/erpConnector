@@ -91,11 +91,7 @@ public class WSService {
        // List queryReslt = query.getResultList();
         return queryresult ;
     }
-    public List test() {
-        // String queryString = (String) query ;
-        List queryresult = jdbcTemplate.queryForList("SELECT name FROM manager ");
-        return queryresult ;
-    }
+
     public void deleteService(Integer id)
     {
         webServiceRepository.deleteById(id);
