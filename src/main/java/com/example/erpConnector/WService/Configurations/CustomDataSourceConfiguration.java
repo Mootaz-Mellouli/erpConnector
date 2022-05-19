@@ -59,9 +59,9 @@ public class CustomDataSourceConfiguration {
     @Bean
     @Lazy
     @Qualifier("customJdbcTemplate")
-    public JdbcTemplate customJdbcTemplate()
+    public JdbcTemplate customJdbcTemplate(@Qualifier("customDataSource") DataSource dataSource)
     {
-        return new JdbcTemplate(customDataSource());
+        return new JdbcTemplate(dataSource);
     }
 
     /*@Lazy

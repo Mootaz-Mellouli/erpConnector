@@ -7,13 +7,17 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 @Lazy
 @ComponentScan(basePackages = "com.example.erpConnector.WService")
+@Transactional
 public class CustomRepository {
 
     @Autowired
@@ -22,6 +26,8 @@ public class CustomRepository {
 
     @Autowired
     ApplicationContext applicationContext ;
+
+    String queryText = null ;
 
     public void refreshCustomJdbc() {
         DataSource ds = (DataSource) applicationContext.getBean("customDataSource");
@@ -33,5 +39,16 @@ public class CustomRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setQuery(String query)
+    {
+        this.queryText=query ;
+    }
+
+    public List test() {
+      // String queryString = (String) query ;
+        List queryresult = jdbcTemplate.queryForList("SELECT name FROM manager ");
+        return queryresult ;
     }
 }

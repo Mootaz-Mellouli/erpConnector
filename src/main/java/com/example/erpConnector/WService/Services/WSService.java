@@ -7,7 +7,9 @@ import com.example.erpConnector.WService.Entity.WebService;
 import com.example.erpConnector.WService.Repository.CustomRepository;
 import com.example.erpConnector.WService.Repository.WebServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -20,8 +22,6 @@ public class WSService {
 
     @Autowired
     WebServiceRepository webServiceRepository ;
-
-    
 
     @Autowired
     EntityManager entityManager ;
@@ -38,6 +38,10 @@ public class WSService {
     @Autowired
     CustomRepository customRepository ;
 
+    @Autowired
+    @Qualifier("customJdbcTemplate")
+    private JdbcTemplate jdbcTemplate ;
+
     public WebService addWebService(WebService webService)
     {
         return webServiceRepository.save(webService);
@@ -52,6 +56,8 @@ public class WSService {
 
     public List callService (Integer id)
     {
+
+
         Optional<WebService> webService ;
         /* * * * * * * je stock le service dans la variable webService  */
         webService= webServiceRepository.findById(id);
@@ -65,6 +71,7 @@ public class WSService {
         customRepository.refreshCustomJdbc();
 
 
+
         //Query query=entityManager.createNativeQuery("select :x from customer  where customer_id=1");
         /* * * * * * * je stock la list des colonnes dans la variable columnsNames  */
         List columnNames=webService.get().getColumn_name();
@@ -72,12 +79,22 @@ public class WSService {
         String inputColumn=webService.get().getInputColumn();
         String inputValue=webService.get().getInputValue();
         String operateur=webService.get().getOperator();
-        Query query=entityManager.createNativeQuery("select "+ "".join(",",columnNames) +" from "+ tableName+ " where "+ inputColumn + " "+operateur+" " + inputValue+"");
+       // Query query=entityManager.createNativeQuery("select "+ "".join(",",columnNames) +" from "+ tableName+ " where "+ inputColumn + " "+operateur+" " + inputValue+"");
+        List queryresult = jdbcTemplate.queryForList("select "+ "".join(",",columnNames) +" from "+ tableName+ " where "+ inputColumn + " "+operateur+" " + inputValue+"");
+       // String queryString = query.toString();
+       // customRepository.setQuery(queryString);
+        //List test = customRepository.test();
+        System.out.println("this is a test "+queryresult);
         /* * * ici je passe la variable comme un parametre dans la requete */
         //query.setParameter("x",oneColumn);
         /* * execution du requete */
-        List queryReslt = query.getResultList();
-        return queryReslt ;
+       // List queryReslt = query.getResultList();
+        return queryresult ;
+    }
+    public List test() {
+        // String queryString = (String) query ;
+        List queryresult = jdbcTemplate.queryForList("SELECT name FROM manager ");
+        return queryresult ;
     }
     public void deleteService(Integer id)
     {
