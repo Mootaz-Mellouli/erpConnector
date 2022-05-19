@@ -8,12 +8,16 @@ import com.example.erpConnector.DBConnections.Repository.DatabaseRowInfoReposito
 import com.example.erpConnector.DBConnections.Repository.DatabaseTableInfoRepository;
 
 import com.example.erpConnector.WService.Configurations.CustomDataSourceConfiguration;
+import com.example.erpConnector.WService.Repository.CustomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -33,6 +37,12 @@ public class DatabaseService {
 
     @Autowired
     ApplicationContext applicationContext ;
+
+    @Autowired
+    EntityManager entityManager ;
+
+    @Autowired
+    CustomRepository customRepository ;
 
     /*@Autowired
     ConnectorDBConfiguration connectorDBConfiguration ;*/
@@ -97,8 +107,8 @@ public class DatabaseService {
 
     public DatabaseConnection updateDBConnection (DatabaseConnection databaseConnection , Integer id)
     {
-        DatabaseConnection dbConn = databaseRepository.findDatabaseConnectionById(id);
-        dbConn.setDb_name(databaseConnection.getDb_name());
+        DatabaseConnection dbConn = databaseRepository.findDatabaseConnectionByDbID(id);
+        dbConn.setDbname(databaseConnection.getDbname());
         dbConn.setDb_type(databaseConnection.getDb_type());
         dbConn.setDb_password(databaseConnection.getDb_password());
         dbConn.setDb_hostname(databaseConnection.getDb_hostname());
@@ -106,18 +116,36 @@ public class DatabaseService {
         return databaseRepository.save(dbConn);
     }
 
-    public void testDBConnection(Integer id)
+    /*public void testDBConnection(Integer id)
     {
-        DatabaseConnection dbConn = databaseRepository.findDatabaseConnectionById(id);
-        dataSourceConfiguration.setUrl(dbConn.getDb_hostname());
-        refreshCustomJdbc();
-    }
 
-    public void refreshCustomJdbc()
-    {
+        Query query = entityManager.createNativeQuery("SHOW DATABASES LIKE :dbName");
+        DatabaseConnection dbConn = databaseRepository.findDatabaseConnectionByDbID(id);
+        String dbName = dbConn.getDbname();
+        query.setParameter("dbName",dbName);
+        List queryReslt = query.getResultList();
+        if (queryReslt.isEmpty()){
+            System.out.println(queryReslt);
+            System.out.println("database not found");}
+        else {
+            System.out.println(queryReslt);
+        dataSourceConfiguration.setUrl(dbConn.getDb_hostname());
+        //refreshCustomJdbc();
+            customRepository.refreshCustomJdbc();
+        }
+
+    }*/
+
+    /*public void refreshCustomJdbc() {
         DataSource ds = (DataSource) applicationContext.getBean("customDataSource");
         JdbcTemplate customJdbcTemplate = (JdbcTemplate) applicationContext.getBean("customJdbcTemplate");
         customJdbcTemplate.setDataSource(ds);
-    }
+        try {
+            boolean test = ds.getConnection().isValid(0);
+            System.out.println("DATABASE TEST : " + test);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
 
 }

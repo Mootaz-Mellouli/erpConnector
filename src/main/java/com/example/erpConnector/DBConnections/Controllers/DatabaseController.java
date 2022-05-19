@@ -69,10 +69,10 @@ public class DatabaseController {
         return databaseService.updateDBConnection(databaseConnection,id) ;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    /*@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping({"/test/{id}"})
     public void testDBConnection(@PathVariable("id") Integer id)
     {
         databaseService.testDBConnection(id);
-    }
+    }*/
 }

@@ -1,13 +1,11 @@
 package com.example.erpConnector.WService.Controller;
 
-import com.example.erpConnector.WService.Entity.QueryResult;
 import com.example.erpConnector.WService.Entity.WebService;
 import com.example.erpConnector.WService.Services.WSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping({"/ws"})
@@ -39,7 +37,6 @@ public class WebServiceController {
     @GetMapping({"/{id}"})
     public List mainService(@PathVariable("id")Integer id)
     {
-
          return webserviceService.callService(id);
     }
 

@@ -5,23 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
-public class WebService {
+public class WebService implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private int service_id ;
     private String service_name ;
     private String database_name ;
-    @OneToMany(mappedBy = "servicesList")
-    @JsonIgnore
-    private List<DatabaseConnection> services = new ArrayList<>() ;
+    /*@ManyToOne
+    private DatabaseConnection databaseConnection ;*/
     private String table_name ;
-    @ElementCollection(fetch = FetchType.EAGER) //temporary solution.
+    @ElementCollection
     private List<String> column_name = new ArrayList<>();
     private String inputValue ;
     private String inputColumn ;

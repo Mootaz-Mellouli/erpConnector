@@ -8,5 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DatabaseRepository extends JpaRepository<DatabaseConnection,Integer> {
 
-DatabaseConnection findDatabaseConnectionById(Integer id);
+DatabaseConnection findDatabaseConnectionByDbID(Integer id);
+
+
+DatabaseConnection findDatabaseConnectionByDbname(String name);
+
 }

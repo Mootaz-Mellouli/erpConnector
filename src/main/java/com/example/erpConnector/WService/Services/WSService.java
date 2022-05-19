@@ -1,20 +1,17 @@
 package com.example.erpConnector.WService.Services;
 
-import com.example.erpConnector.WService.Entity.QueryResult;
+import com.example.erpConnector.DBConnections.Entities.DatabaseConnection;
+import com.example.erpConnector.DBConnections.Repository.DatabaseRepository;
+import com.example.erpConnector.WService.Configurations.CustomDataSourceConfiguration;
 import com.example.erpConnector.WService.Entity.WebService;
-import com.example.erpConnector.WService.Repository.ExtractionServiceRepository;
+import com.example.erpConnector.WService.Repository.CustomRepository;
 import com.example.erpConnector.WService.Repository.WebServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +21,22 @@ public class WSService {
     @Autowired
     WebServiceRepository webServiceRepository ;
 
-    @Autowired
-    ExtractionServiceRepository extractionServiceRepository ;
+    
 
     @Autowired
     EntityManager entityManager ;
+
+    @Autowired
+    DatabaseRepository databaseRepository ;
+
+    @Autowired
+    CustomDataSourceConfiguration dataSourceConfiguration ;
+
+    @Autowired
+    ApplicationContext applicationContext ;
+
+    @Autowired
+    CustomRepository customRepository ;
 
     public WebService addWebService(WebService webService)
     {
@@ -47,6 +55,16 @@ public class WSService {
         Optional<WebService> webService ;
         /* * * * * * * je stock le service dans la variable webService  */
         webService= webServiceRepository.findById(id);
+        DatabaseConnection database= databaseRepository.findDatabaseConnectionByDbname(webService.get().getDatabase_name());
+        String url = database.getDb_hostname();
+        String username = database.getDb_username();
+        String password = database.getDb_password();
+        dataSourceConfiguration.setUrl(url);
+        dataSourceConfiguration.setUsername(username);
+        dataSourceConfiguration.setPassword(password);
+        customRepository.refreshCustomJdbc();
+
+
         //Query query=entityManager.createNativeQuery("select :x from customer  where customer_id=1");
         /* * * * * * * je stock la list des colonnes dans la variable columnsNames  */
         List columnNames=webService.get().getColumn_name();
